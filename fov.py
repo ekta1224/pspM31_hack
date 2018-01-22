@@ -11,4 +11,11 @@ def K(R,Z):
     
     return (k2*Z/2.)*np.log(1. +(R**2./Z**2.)) + (k3*Z**2.)*(np.sqrt(1+(R**2./Z**2.)) - 1.) + (3.*k4*R**2.*Z/2.) + k2*R*(np.pi/2. - np.arctan(R/Z)) + k3*R**2.*np.log(Z/R*(1. + np.sqrt(1. + (R**2./Z**2.)))) + k1
 
-print K(1.5,1.5)
+
+def N_fov(Nlum, R, Z):
+    return K(R,Z)*Nlum
+
+def R_fov(fov, distance):
+    return fov*np.pi/180.*distance/2.
+
+print N_fov(7.4,  R_fov(1.5,800)/115.,1.5) #satellites per pointing
