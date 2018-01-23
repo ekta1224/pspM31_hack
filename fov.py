@@ -34,7 +34,7 @@ rs = [794., 880., 960.]
 for nlum in nlums:
     print N_fov(nlum, R_fov(fov, m33r)/rvir, Z) #satellites per pointing
 
-#below the R_fov of hypersuprimecam (R~0.06), K pretty much goes to negative numbers
+
 rvir = 120.
 Z = 1.5
 nlum = 10.5
@@ -49,9 +49,11 @@ for m33r in rs:
         nfov = N_fov(nlum, rfov/rvir,Z)
         points = rvir**2./R_fov(fov, m33r)**2.
         print ' K, R_fov,  Npoint %s & %s & %s & %s & %s & %s & %s'%(round(k, 3), round(rfov,2), int(round(points,0)), round(N_fov(10.5, rfov/rvir, Z),3), round(N_fov(7.4, rfov/rvir, Z),3), round(N_fov(3.7, rfov/rvir, Z),3), round(N_fov(1.3, rfov/rvir, Z),3))
-        minfov = 120*0.06*2.*180/np.pi/m33r
-        #print 'minimum FOV (deg) as fn of m33r', minfov
+    minfov = 120*0.06*180/np.pi/m33r*2.
+    print 'minimum FOV (deg) as fn of m33r', minfov
     
-print N_fov(10.5, R_fov(0.85, 960.)/rvir, Z) #satellites per pointing
+
+#below the R_fov of hypersuprimecam (R~0.06), K pretty much goes to negative numbers
 
 
+print  N_fov(nlum, R_fov(0.9, 794.)/rvir, Z) 
