@@ -19,13 +19,13 @@ def R_fov(fov, distance, sq=False):
         return fov *(np.pi/180.)**2.*distance/2.
     return fov*np.pi/180.*distance/2.
 
-m33r = 794. 
+m33r = 960. 
 rvir = 120.
 Z = 1.5
 nlum = 7.4 
 fov = 2.2
 
-print K(R_fov(fov, m33r )/rvir, Z)
+print 'K(R):', K(R_fov(fov, m33r )/rvir, Z)
 #print N_fov(nlum, R_fov(fov, m33r)/rvir, Z) #satellites per pointing
 
 nlums = [10.5, 7.4, 3.7, 1.3]
@@ -35,7 +35,8 @@ for nlum in nlums:
 
 #below the R_fov of hypersuprimecam (R~0.06), K pretty much goes to negative numbers
 for m33r in rs:
-    print 'R_fov', R_fov(1.5, m33r), R_fov(2.2, m33r)
+    print m33r
+    print 'R_fov', R_fov(1., m33r), R_fov(1.5, m33r), R_fov(2.2, m33r)
     minfov = 120*0.06*2.*180/np.pi/m33r
     print 'minimum FOV (deg) as fn of m33r', minfov
     
