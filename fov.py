@@ -28,18 +28,20 @@ fov = 2.2
 print 'K(R):', K(R_fov(fov, m33r )/rvir, Z)
 #print N_fov(nlum, R_fov(fov, m33r)/rvir, Z) #satellites per pointing
 
-fovs = [1., 1.5, 2.2]
+
 nlums = [10.5, 7.4, 3.7, 1.3]
-rs = [794., 880., 960.]
+
 for nlum in nlums:
     print N_fov(nlum, R_fov(fov, m33r)/rvir, Z) #satellites per pointing
 
 
-rvir = 120.
+rvir = 50. # 125 kpc the largest rvir for which K is not negative at all three M33 distances
 Z = 1.5
-nlum = 10.5
-fov = 2.2
-
+#nlum = 10.5
+fovs = [1., 1.5]#, 2.2]
+rs = [794., 880., 968.]
+print 10.5/3, 7.4/3, 3.7/3, 1.3/3
+#for paper table
 for m33r in rs:
     print m33r
     for fov in fovs:
@@ -48,12 +50,12 @@ for m33r in rs:
         k = K(R_fov(fov, m33r)/rvir, Z)
         nfov = N_fov(nlum, rfov/rvir,Z)
         points = rvir**2./R_fov(fov, m33r)**2.
-        print ' K, R_fov,  Npoint %s & %s & %s & %s & %s & %s & %s'%(round(k, 3), round(rfov,2), int(round(points,0)), round(N_fov(10.5, rfov/rvir, Z),3), round(N_fov(7.4, rfov/rvir, Z),3), round(N_fov(3.7, rfov/rvir, Z),3), round(N_fov(1.3, rfov/rvir, Z),3))
-    minfov = 120*0.06*180/np.pi/m33r*2.
+        #print ' K, R_fov,  Npoint %s & %s & %s & %s & %s & %s & %s'%(round(k, 3), round(rfov,2), int(round(points,0)), round(N_fov(10.5, rfov/rvir, Z),3), round(N_fov(7.4, rfov/rvir, Z),3), round(N_fov(3.7, rfov/rvir, Z),3), round(N_fov(1.3, rfov/rvir, Z),3))
+        #nlum divided by 1/3 to accomodate for one third of the virial extent
+        print ' K, R_fov,  Npoint %s & %s & %s & %s & %s & %s & %s'%(round(k, 3), round(rfov,2), int(round(points,0)), round(N_fov(10.5/3, rfov/rvir, Z),3), round(N_fov(7.4/3, rfov/rvir, Z),3), round(N_fov(3.7/3, rfov/rvir, Z),3), round(N_fov(1.3/3, rfov/rvir, Z),3))
+    minfov = rvir*0.06*180/np.pi/m33r*2.
     print 'minimum FOV (deg) as fn of m33r', minfov
     
 
 #below the R_fov of hypersuprimecam (R~0.06), K pretty much goes to negative numbers
-
-
-print  N_fov(nlum, R_fov(0.9, 794.)/rvir, Z) 
+#print  N_fov(nlum, R_fov(0.9, 794.)/rvir, Z) 
