@@ -35,13 +35,15 @@ for nlum in nlums:
     print N_fov(nlum, R_fov(fov, m33r)/rvir, Z) #satellites per pointing
 
 
-rvir = 50. # 125 kpc the largest rvir for which K is not negative at all three M33 distances
+rvir = 156. # 125 kpc the largest rvir for which K is not negative at all three M33 distances
 Z = 1.5
 #nlum = 10.5
 fovs = [1., 1.5]#, 2.2]
 rs = [794., 880., 968.]
-print 10.5/3, 7.4/3, 3.7/3, 1.3/3
+
 #for paper table
+scale = rvir/156.
+print 10.5*scale, 7.4*scale, 3.7*scale, 1.3*scale
 for m33r in rs:
     print m33r
     for fov in fovs:
@@ -52,7 +54,7 @@ for m33r in rs:
         points = rvir**2./R_fov(fov, m33r)**2.
         #print ' K, R_fov,  Npoint %s & %s & %s & %s & %s & %s & %s'%(round(k, 3), round(rfov,2), int(round(points,0)), round(N_fov(10.5, rfov/rvir, Z),3), round(N_fov(7.4, rfov/rvir, Z),3), round(N_fov(3.7, rfov/rvir, Z),3), round(N_fov(1.3, rfov/rvir, Z),3))
         #nlum divided by 1/3 to accomodate for one third of the virial extent
-        print ' K, R_fov,  Npoint %s & %s & %s & %s & %s & %s & %s'%(round(k, 3), round(rfov,2), int(round(points,0)), round(N_fov(10.5/3, rfov/rvir, Z),3), round(N_fov(7.4/3, rfov/rvir, Z),3), round(N_fov(3.7/3, rfov/rvir, Z),3), round(N_fov(1.3/3, rfov/rvir, Z),3))
+        print ' K, R_fov,  Npoint %s & %s & %s & %s & %s & %s & %s'%(round(k, 3), round(rfov,2), int(round(points,0)), round(N_fov(10.5*scale, rfov/rvir, Z),3), round(N_fov(7.4*scale, rfov/rvir, Z),3), round(N_fov(3.7*scale, rfov/rvir, Z),3), round(N_fov(1.3*scale, rfov/rvir, Z),3))
     minfov = rvir*0.06*180/np.pi/m33r*2.
     print 'minimum FOV (deg) as fn of m33r', minfov
     

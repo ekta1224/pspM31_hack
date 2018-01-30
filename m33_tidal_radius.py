@@ -47,16 +47,16 @@ plt.savefig('m31_rt.png')
 
 
 #update after the M33 hack day satellite project - 9/18/2017
-m33mass = 1e11
-m31mass = 1.5e12
-m31c = 9.56
+m33mass = 2.3e11
+m31mass = 2e12
+m31c = 9.36
 
 def rt(peri):
     m31 = NFW(m31mass, peri, m31c)
     m31enc = m31.mass()
     return peri*(2.*m31enc/m33mass)**(-1./3.), m31enc
 
-rs = np.arange(10., 300., 5.)
+rs = np.arange(1., 300., 1.)
 
 masses = []
 rts = []
