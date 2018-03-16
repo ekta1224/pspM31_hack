@@ -5,6 +5,7 @@ from fov import K, N_fov, R_fov
 def Mlim(Mhost, Mv1, Mv2):
     return Mhost*(10**((Mv2-Mv1)/-2.5))
 
+print K(0.76, 1.5)
 
 colors = ['royalblue', 'darkorange', 'mediumseagreen', 'crimson', 'darkorchid', 'turquoise']
 Ds = [794., 880., 968.]
@@ -14,10 +15,21 @@ for D in Ds:
     # test for HSC at one M33 distance
     fov = 1.5
 
+    if D == 794.:
+        hNfields = [10.,23., 50., 100., 130.]
+        mNfields = [10., 52., 100., 200., 293.]
+    if D == 880.:
+        hNfields = [10.,23., 50., 100., 106.]
+        mNfields = [10., 52., 100., 200., 238.]
+    if D == 968.:
+        hNfields = [10.,23., 50., 88.]
+        mNfields = [10., 52., 100., 197.]
+
     #M_v translates to Mstar translates to Nlum from LCDM
     rfov = R_fov(fov, D)
-    print rfov
     rvir = 156.
+    print D
+    print 'max fields to observe ALL predicted sats at this D:', (rvir*0.76/rfov)**2.
     nlums = [10.5, 7.4, 3.7, 1.3]
     Mvs = [np.log10(1e3/3.2e9)*-2.5 + -18.8, np.log10(1e4/3.2e9)*-2.5 + -18.8, np.log10(1e5/3.2e9)*-2.5 + -18.8, np.log10(1e6/3.2e9)*-2.5 + -18.8]
     mstars = [1e3, 1e4, 1e5, 1e6]
@@ -31,16 +43,18 @@ for D in Ds:
     obs = []
     for Mv,nlum in zip(Mvs,nlums):
         obs.append(nlum*K(rfov/rvir, 1.5))
+    print 1,obs
     plt.plot(Mvs, obs,  c='gray') #label='1 pointing',
 
     plt.legend()
     plt.savefig('M33_nfov_HSC_test.pdf')
 
-    for i,c in zip([10., 50., 100., 150.],colors):
+    for i,c in zip(hNfields,colors):
         obs = []
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
-        plt.plot(Mvs, obs,  color=c)#label='%i pointings'%(i),
+        print i, [round(o, 2) for o in obs]
+        plt.plot(Mvs, obs,  color=c, label='%i fields'%(i))
 
     plt.legend()
     plt.savefig('M33_nfov_HSC_test.pdf')
@@ -48,15 +62,19 @@ for D in Ds:
     # add MegaCam
     rfov = R_fov(1., D)
     print rfov
+    print D
+    print 'max fields to observe ALL predicted sats at this D:', (rvir*0.76/rfov)**2.
     obs = []
     for Mv,nlum in zip(Mvs,nlums):
         obs.append(nlum*K(rfov/rvir, 1.5))
+    print 1, obs
     plt.plot(Mvs, obs, label='1 field', c='gray', ls='--')
 
-    for i,c in zip([10., 50., 100., 150., 200., 250.], colors):
+    for i,c in zip(mNfields, colors):
         obs = []
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
+        print i, [round(o, 2) for o in obs]
         plt.plot(Mvs, obs, label='%i fields'%(i), ls='--', color=c)
 
     plt.legend()
