@@ -87,6 +87,7 @@ for D in Ds:
     plt.figtext(0.05, 0.95, r'$\rm D_{M33} = %i \, kpc$'%D, color='red')
     plt.figtext(0.45, 0.8, 'solid: HSC', fontsize=14)
     plt.figtext(0.45, 0.75, 'dashed: MegaCam', fontsize=14)
+    plt.axvline(x=-6., color='orange', zorder=-100)
     plt.savefig('M33_summary_sat_predictions_%i.pdf'%D)
 
 
