@@ -52,6 +52,7 @@ for D in Ds:
     for i,c in zip(hNfields,colors):
         obs = []
         for Mv,nlum in zip(Mvs,nlums):
+            print 'R_proj:', np.sqrt((i*rfov**2.)/rvir**2.)*rvir
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
         print i, [round(o, 2) for o in obs]
         plt.plot(Mvs, obs,  color=c, label='%i fields'%(i))
@@ -87,7 +88,7 @@ for D in Ds:
     plt.figtext(0.05, 0.95, r'$\rm D_{M33} = %i \, kpc$'%D, color='red')
     plt.figtext(0.45, 0.8, 'solid: HSC', fontsize=14)
     plt.figtext(0.45, 0.75, 'dashed: MegaCam', fontsize=14)
-    plt.axvline(x=-6., color='orange', zorder=-100)
+    plt.axvline(x=-6., ymin=0., ymax=0.75,color='orange', zorder=-100, ls=':')
     plt.savefig('M33_summary_sat_predictions_%i.pdf'%D)
 
 
