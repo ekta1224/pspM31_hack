@@ -53,8 +53,8 @@ for D in Ds:
     labels = ['', '(PAndAS)', '', '', r'($\rm R_{vir}$)']
     for i,c,l in zip(hNfields, colors, labels):
         obs = []
+        print 'R_proj:', np.sqrt((i*rfov**2.)/rvir**2.)*rvir
         for Mv,nlum in zip(Mvs,nlums):
-            print 'R_proj:', np.sqrt((i*rfov**2.)/rvir**2.)*rvir
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
         print i, [round(o, 2) for o in obs]
         plt.plot(Mvs, obs,  color=c, label='%i fields %s'%(i,l))
@@ -76,6 +76,7 @@ for D in Ds:
 
     for i,c,l in zip(mNfields, colors, labels):
         obs = []
+        print 'R_proj:', np.sqrt((i*rfov**2.)/rvir**2.)*rvir
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
         print i, [round(o, 2) for o in obs]
