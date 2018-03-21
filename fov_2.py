@@ -38,24 +38,26 @@ for D in Ds:
     plt.figure()
     ax1 = plt.subplot(111)
     ax2 = ax1.twiny()
-    plt.plot(Mvs, nlums, label='LCDM simulation', lw=3, color='k')
+    plt.plot(Mvs, nlums, label='LCDM simulation', lw=4, color='gray')
 
     obs = []
-    for Mv,nlum in zip(Mvs,nlums):
+    for Mv,nlum in zip( Mvs,nlums):
         obs.append(nlum*K(rfov/rvir, 1.5))
     print 1,obs
-    plt.plot(Mvs, obs,  c='gray') #label='1 pointing',
+    
+    plt.plot(Mvs, obs,  c='k', label='1 pointing')
 
     plt.legend()
     plt.savefig('M33_nfov_HSC_test.pdf')
 
-    for i,c in zip(hNfields,colors):
+    labels = ['', '(PAndAS)', '', '', r'($\rm R_{vir}$)']
+    for i,c,l in zip(hNfields, colors, labels):
         obs = []
         for Mv,nlum in zip(Mvs,nlums):
             print 'R_proj:', np.sqrt((i*rfov**2.)/rvir**2.)*rvir
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
         print i, [round(o, 2) for o in obs]
-        plt.plot(Mvs, obs,  color=c, label='%i fields'%(i))
+        plt.plot(Mvs, obs,  color=c, label='%i fields %s'%(i,l))
 
     plt.legend()
     plt.savefig('M33_nfov_HSC_test.pdf')
@@ -69,23 +71,23 @@ for D in Ds:
     for Mv,nlum in zip(Mvs,nlums):
         obs.append(nlum*K(rfov/rvir, 1.5))
     print 1, obs
-    plt.plot(Mvs, obs, label='1 field', c='gray', ls='--')
+    #plt.plot(Mvs, obs, label='1 field', c='gray', ls='--')
 
-    for i,c in zip(mNfields, colors):
+
+    for i,c,l in zip(mNfields, colors, labels):
         obs = []
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
         print i, [round(o, 2) for o in obs]
-        plt.plot(Mvs, obs, label='%i fields'%(i), ls='--', color=c)
-
-    plt.legend()
+        plt.plot(Mvs, obs, label='%i fields %s'%(i,l), color=c, ls='--')
+    plt.legend(frameon=False)
     ax1.set_xlabel(r'limiting magnitude ($\rm M_V$)', fontsize=16)
     ax1.set_xlim(-10, -2.5)
     ax2.set_xticks(Mvs)
     ax2.set_xticklabels([r"$10^{3}$",r"$10^{4}$",r"$10^{5}$",r"$10^{6}$"])
     ax2.set_xlabel(r'limiting $\rm M_{*} \, (M_{\odot})$', fontsize=16)
     ax1.set_ylabel(r'total number of observed satellites', fontsize=16)
-    plt.figtext(0.05, 0.95, r'$\rm D_{M33} = %i \, kpc$'%D, color='red')
+    plt.figtext(0.05, 0.95, r'$\rm D_{M33} = %i \, kpc$'%D, color='black')
     plt.figtext(0.45, 0.8, 'solid: HSC', fontsize=14)
     plt.figtext(0.45, 0.75, 'dashed: MegaCam', fontsize=14)
     plt.axvline(x=-6.5, ymin=0., ymax=0.75,color='orange', zorder=-100, ls=':')
