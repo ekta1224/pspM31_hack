@@ -35,7 +35,7 @@ for D in Ds:
     Mvs2 = [np.log10(1e3/3.2e9)*-2.5 + -18.8, np.log10(1e4/3.2e9)*-2.5 + -18.8, np.log10(1e5/3.2e9)*-2.5 + -18.8, np.log10(1e6/3.2e9)*-2.5 + -18.8]
     mstars =[1.00000000e+03,   1.46779927e+03,   2.15443469e+03,   3.16227766e+03, 4.64158883e+03,   6.81292069e+03,   1.00000000e+04,   1.46779927e+04, 2.15443469e+04,   3.16227766e+04,   4.64158883e+04,   6.81292069e+04,1.00000000e+05,   1.46779927e+05,   2.15443469e+05,   3.16227766e+05, 4.64158883e+05,   6.81292069e+05,   1.00000000e+06]#,   1.46779927e+06, 2.15443469e+06,   3.16227766e+06,   4.64158883e+06,   6.81292069e+06, 1.00000000e+07]  #[1e3, 1e4, 1e5, 1e6]
     Mvs = [np.log10(m/3.2e9)*-2.5 + -18.8 for m in mstars]
-    print Mvs, Mvs2
+    #print Mvs, Mvs2
     
     plt.figure()
     ax1 = plt.subplot(111)
@@ -82,7 +82,7 @@ for D in Ds:
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*K(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
         print i, [round(o, 2) for o in obs]
-        ax1.plot(Mvs, obs, label='%i fields %s'%(i,l), color=c, ls='--')
+        ax1.plot(Mvs, obs, label='%i fields %s'%(i,l), color=c, marker='o', ms=3,ls='--')
     ax1.legend(frameon=False)
 
 
