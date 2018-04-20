@@ -23,7 +23,14 @@ def K(R):
     if R >= 0.2:
         #print 'R > 0.2'
         return (k4*np.arctan((R/k5) - k6))
-        
+
+Rs = np.arange(0.01, 1.5, 0.05)
+plt.figure()
+ax = plt.subplot(111)
+plt.plot(Rs, [K(RR) for RR in Rs])
+ax.grid(color='k', linestyle=':', linewidth=1)
+plt.savefig('R_vs_KR.pdf')
+
 
 def K2(Z, R, A=True, B=False):
     k1 = -0.2615
