@@ -58,8 +58,8 @@ print 'R and K(R)', R, K(R)
 Ks = []
 K2s = []
 for R in np.arange(0.01, 1.5, .05):
-    myK = integrate.dblquad(K2, 0., R, lambda Z: 0., lambda Z: 2.)[0]
-    myK2 = integrate.dblquad(K2, 0., R, lambda Z: 0., lambda Z: 3.)[0]
+    myK = integrate.dblquad(K2, 0., R, lambda Z: 0., lambda Z: 1.)[0]
+    myK2 = integrate.dblquad(K2, 0., R, lambda Z: 0., lambda Z:1.5)[0]
     #print R, myK, myK2
     Ks.append(myK)
     K2s.append(myK2)
@@ -72,4 +72,4 @@ plt.plot(0.33, 0.54,'o ', color='orange')
 plt.plot(0.5, 0.76,'bo')
 ax.grid(color='k', linestyle=':', linewidth=1)
 plt.legend()
-plt.savefig('R_vs_Klos_A.pdf')
+plt.savefig('R_vs_Klos_A_halfZ.pdf')
