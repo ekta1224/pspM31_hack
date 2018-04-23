@@ -94,6 +94,8 @@ for R in Rs:
     K2s.append(myK2)
     myKs.append(myKlos(R, Z=1.))
     myK2s.append(myKlos(R, Z=1.5))
+
+np.savetxt('Klos.txt', np.column_stack((Rs, Ks, K2s, myKs, myK2s)), delimiter="  ")
                 
 plt.figure()
 ax = plt.subplot(111)
