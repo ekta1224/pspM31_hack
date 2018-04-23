@@ -57,7 +57,7 @@ def mydKdr(R):
         return k1 + 2.*k2*R + 3*k3*R**2.
 
     if R >= 0.2:
-        return k4 / (k5 * ((k6 - (R/k4))**2. + 1))
+        return k4 / (k5 * ((k6 - (R/k5))**2. + 1))
 
 def myKlos(R,Z):
     theta0 = np.arctan2(R,Z)
