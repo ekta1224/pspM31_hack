@@ -53,22 +53,22 @@ for R in np.arange(0.01, 1.5, .05):
     print R
     Z = 1.
     theta0 = np.arctan2(R,Z)
-    print theta0
-    term1 = integrate.dblquad(K2, 0., theta0, lambda R: 0, lambda R: R)[0] 
-    term2 = integrate.dblquad(K2, theta0, np.pi/2., lambda R: 0, lambda R: R)[0]#R**2./np.sqrt(R**2-Z**2.))[0] # Z > R if R < 1 always, so this bound makes no sense.
+    term1 = integrate.dblquad(K2, 0., theta0, lambda x: 0, lambda x: R)[0] 
+    term2 = integrate.dblquad(K2, theta0, Z, lambda x: 0, lambda x: R)[0]#R**2./np.sqrt(R**2-Z**2.))[0] # Z > R if R < 1 always, so this bound makes no sense.
     myK = term1 + term2
     Ks.append(myK)
 
-#     Z = 1.5
-#     theta0 = np.arctan2(R,Z)
-#     myK2 = integrate.dblquad(K2, 0., R, lambda Z: 0., lambda Z: 1.5)[0]
-#     #print R, myK, myK2
-#     K2s.append(myK2)
+    Z = 1.5
+    theta0 = np.arctan2(R,Z)
+    term1 = integrate.dblquad(K2, 0., theta0, lambda x: 0, lambda x: R)[0] 
+    term2 = integrate.dblquad(K2, theta0, Z, lambda x: 0, lambda x: R)[0]#R**2./np.sqrt(R**2-Z**2.))[0] # Z > R if R < 1 always, so this bound makes no sense.
+    myK2 = term1 + term2 
+    K2s.append(myK2)
 
 plt.figure()
 ax = plt.subplot(111)
 plt.plot(np.arange(0.01, 1.5, .05), Ks, label='Z=1')
-#plt.plot(np.arange(0.01, 1.5, .05), K2s, label='Z=1.5')
+plt.plot(np.arange(0.01, 1.5, .05), K2s, label='Z=1.5')
 plt.plot(0.33, 0.54,'o ', color='orange')
 plt.plot(0.5, 0.76,'bo')
 ax.grid(color='k', linestyle=':', linewidth=1)
