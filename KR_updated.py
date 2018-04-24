@@ -87,20 +87,21 @@ myKs = []
 myK2s = []
 Rs = np.arange(0., 2., .05)
 for R in Rs:
-    myK = Klos(R, Z=1.)
-    myK2 = Klos(R, Z=1.5)
-    print R, myK, myK2
-    Ks.append(myK)
-    K2s.append(myK2)
+    print R
+ #   myK = Klos(R, Z=1.)
+ #   myK2 = Klos(R, Z=1.5)
+ #   print R, myK, myK2
+ #   Ks.append(myK)
+ #   K2s.append(myK2)
     myKs.append(myKlos(R, Z=1.))
     myK2s.append(myKlos(R, Z=1.5))
 
-np.savetxt('Klos.txt', np.column_stack((Rs, Ks, K2s, myKs, myK2s)), delimiter="  ")
+#np.savetxt('Klos.txt', np.column_stack((Rs, Ks, K2s, myKs, myK2s)), delimiter="  ")
                 
 plt.figure()
 ax = plt.subplot(111)
-plt.plot(Rs, Ks, label='Z=1')
-plt.plot(Rs, K2s, label='Z=1.5')
+#plt.plot(Rs, Ks, label='Z=1')
+#plt.plot(Rs, K2s, label='Z=1.5')
 plt.plot(Rs, myKs, label='Z=1 (analytic)')
 plt.plot(Rs, myK2s, label='Z=1.5 (analytic')
 plt.plot(0.33, 0.54,'o ', color='orange')
@@ -108,4 +109,4 @@ plt.plot(0.5, 0.76,'bo')
 ax.grid(color='k', linestyle=':', linewidth=1)
 plt.legend()
 plt.xlim(0,1.5)
-plt.savefig('Klos_updated.pdf')
+plt.savefig('Klos_updated_analytic.pdf')
