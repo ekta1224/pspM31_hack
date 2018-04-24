@@ -53,15 +53,15 @@ for R in np.arange(0.01, 1.5, .05):
     print R
     Z = 1.
     theta0 = np.arctan2(R,Z)
-    term1 = integrate.dblquad(K2, 0., theta0, lambda x: 0, lambda x: R)[0] 
-    term2 = integrate.dblquad(K2, theta0, Z, lambda x: 0, lambda x: R)[0]#R**2./np.sqrt(R**2-Z**2.))[0] # Z > R if R < 1 always, so this bound makes no sense.
-    myK = term1 + term2
+    term1 = integrate.dblquad(K2, 0., Z, lambda x: 0, lambda x: R)[0] 
+    #term2 = integrate.dblquad(K2, theta0, Z, lambda x: 0, lambda x: R)[0]#R**2./np.sqrt(R**2-Z**2.))[0] # Z > R if R < 1 always, so this bound makes no sense.
+    myK = term1 #+ term2
     Ks.append(myK)
 
     Z = 1.5
     theta0 = np.arctan2(R,Z)
-    term1 = integrate.dblquad(K2, 0., theta0, lambda x: 0, lambda x: R)[0] 
-    term2 = integrate.dblquad(K2, theta0, Z, lambda x: 0, lambda x: R)[0]#R**2./np.sqrt(R**2-Z**2.))[0] # Z > R if R < 1 always, so this bound makes no sense.
+    term1 = integrate.dblquad(K2, 0., theta0, lambda x, y :0, Z*np.sqrt(x**2. + y**2.)/y)[0] 
+    term2 = integrate.dblquad(K2, theta0, np.pi/2., lambda x, y: 0, R*np.sqrt(x**2. + y**2.)/x)[0]#R**2./np.sqrt(R**2-Z**2.))[0] # Z > R if R < 1 always, so this bound makes no sense.
     myK2 = term1 + term2 
     K2s.append(myK2)
 
