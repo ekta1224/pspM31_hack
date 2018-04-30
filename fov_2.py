@@ -50,10 +50,8 @@ for D in Ds:
     obs = []
     for Mv,nlum in zip( Mvs,nlums):
         obs.append(nlum*K(rfov/rvir, 1.5))
-    print 1,obs
-    
+    print 1,obs    
     ax1.plot(Mvs, obs,  c='k', label='1 pointing')
-
     ax1.legend()
     plt.savefig('M33_nfov_HSC_test.pdf')
 
@@ -67,7 +65,7 @@ for D in Ds:
         ax1.plot(Mvs, obs,  color=c, label='%i fields %s'%(i,l))
 
     ax1.legend()
-    plt.savefig('M33_nfov_HSC_test.pdf')
+
 
     # add MegaCam
     rfov = R_fov(1., D)
