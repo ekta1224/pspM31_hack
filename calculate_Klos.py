@@ -1,5 +1,4 @@
-# compute the multiplicative constant for FOV calculations
-# Dooley 2017a, Equation 6
+# compute the multiplicative constant for FOV from  Dooley 2017a
 # number of satellites along the line of sight relative to the number expected within Rvir 
 import numpy as np
 from plotting import *
@@ -69,25 +68,75 @@ if __name__ == "__main__":
     Mvs = [np.log10(m/3.2e9)*-2.5 + -18.8 for m in mstars]
     print len(mstars), len(Mvs), len(nlums)
 
-    #translate stellar mass to M_V
+    #shortened lists
     Mvs2 = [np.log10(1e3/3.2e9)*-2.5 + -18.8, np.log10(1e4/3.2e9)*-2.5 + -18.8, np.log10(1e5/3.2e9)*-2.5 + -18.8, np.log10(1e6/3.2e9)*-2.5 + -18.8]
-    
+    nlums2 = np.array([nlums[0], nlums[6], nlums[12], nlums[18]])
+    print Mvs2, nlums2
+    nlos2 = np.array([nlo[0], nlo[6], nlo[12], nlo[18]])
+    nhis2 =  np.array([nhi[0], nhi[6], nhi[12], nhi[18]])
+    print nhis2-nlums2
+    print nlums2-nlos2
+
+    #output tables
+    fovs = [1.5, 1.]
+    cameras = ['HSC', 'MegaCam']
+    for fov, c in zip(fovs,cameras):
+        print c
+
+        for D in Ds:
+            print D
+
+            if D == 794.:
+                hNfields = [10.,23., 50., 100., 144.]
+                mNfields = [10., 52., 100., 200., 324.]
+            if D == 880.:
+                hNfields = [10.,23., 50., 100., 117.]
+                mNfields = [10., 52., 100., 200., 264.]
+            if D == 968.:
+                hNfields = [10.,23., 50., 97.]
+                mNfields = [10., 52., 100., 218.]
+
+            #HSC
+            rfov = R_fov(fov, D)
+
+            # 1 field
+            obs = []
+            for nlum in nlums2:
+                obs.append(nlum*Klos(rfov/rvir, 1.5))
+            print 1, rfov, obs    
+            
+            if fov == 1.5:
+                fields = hNfields
+            else :
+                fields = mNfields
+
+            for i in fields:
+                obs = []
+                for nlum in nlums2:
+                    obs.append(nlum*Klos(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
+                print i, np.sqrt((i*rfov**2.)/rvir**2.)*rvir, [round(o, 2) for o in obs]
+
+    assert False
+    ######################################################################
+    # make plots 
+
     for D in Ds:
         print D
         
         #HSC field of view diameter
         fov = 1.5
         rfov = R_fov(fov, D)
+        print rvir**2./rfov**2.
 
         if D == 794.:
-            hNfields = [10.,23., 50., 100., 130.]
-            mNfields = [10., 52., 100., 200., 293.]
+            hNfields = [10.,23., 50., 100., 144.]
+            mNfields = [10., 52., 100., 200., 324.]
         if D == 880.:
-            hNfields = [10.,23., 50., 100., 106.]
-            mNfields = [10., 52., 100., 200., 238.]
+            hNfields = [10.,23., 50., 100., 117.]
+            mNfields = [10., 52., 100., 200., 264.]
         if D == 968.:
-            hNfields = [10.,23., 50., 88.]
-            mNfields = [10., 52., 100., 197.]
+            hNfields = [10.,23., 50., 97.]
+            mNfields = [10., 52., 100., 218.]
 
 
         plt.figure()
@@ -100,6 +149,8 @@ if __name__ == "__main__":
         #HSC
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*Klos(rfov/rvir, 1.5))
+        print 'R_proj:', rfov
+        print 'max fields to observe ALL predicted sats at this D:', (rvir*0.8/rfov)**2. #R=0.8 when K_los=1
         print 1,obs    
         ax1.plot(Mvs, obs,  c='k', label='1 pointing')
         ax1.legend()
@@ -120,7 +171,8 @@ if __name__ == "__main__":
         rfov = R_fov(1., D)
         print rfov
         print D
-        print 'max fields to observe ALL predicted sats at this D:', (rvir*0.76/rfov)**2.
+        print rvir**2./rfov**2.
+        print 'max fields to observe ALL predicted sats at this D:', (rvir*0.8/rfov)**2.
         obs = []
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*Klos(rfov/rvir, 1.5))
@@ -154,7 +206,7 @@ if __name__ == "__main__":
         plt.figtext(0.45, 0.8, 'solid: HSC', fontsize=14)
         plt.figtext(0.45, 0.75, 'dashed: MegaCam', fontsize=14)
 
-        plt.savefig('M33_summary_sat_predictions_%i_new_test.pdf'%D)
+        plt.savefig('M33_summary_sat_predictions_%i_new.pdf'%D)
         break
 
 
