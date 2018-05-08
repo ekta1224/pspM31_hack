@@ -116,7 +116,7 @@ if __name__ == "__main__":
                     obs.append(nlum*Klos(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
                 print i, np.sqrt((i*rfov**2.)/rvir**2.)*rvir, [round(o, 2) for o in obs]
 
-    assert False
+    #assert False
     ######################################################################
     # make plots 
 
@@ -199,7 +199,7 @@ if __name__ == "__main__":
 
         ax1.set_xlabel(r'limiting magnitude ($\rm M_V$)', fontsize=16)
         ax1.set_ylabel(r'total number of observed satellites', fontsize=16)
-        ax1.axvline(x=-6.5, ymin=0., ymax=0.75,color='orange', zorder=-100, ls=':')
+        ax1.axvline(x=-6.5, ymin=0., ymax=0.75,color='orange', zorder=-100, ls=':', lw=2)
         ax1.set_xlim(-10.5, -2.)
 
         plt.figtext(0.05, 0.95, r'$\rm D_{M33} = %i \, kpc$'%D, color='black')
