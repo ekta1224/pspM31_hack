@@ -58,7 +58,7 @@ if __name__ == "__main__":
 
     colors = ['royalblue', 'darkorange', 'mediumseagreen', 'crimson', 'darkorchid', 'turquoise']
     Ds = [794., 880., 968.]
-    rvir = 156.
+    rvir = 161.
 
     #predictions for LMC from Dooley+17B, Fig. 1
     nlums = [10.5107, 10.1041, 9.6503, 9.15155, 8.60745, 8.03555, 7.42715, 6.7938, 6.1579, 5.51975, 4.89235, 4.28215, 3.71745, 3.186, 2.71315, 2.29685, 1.9339,  1.6118,  1.3349]#, 1.1006, 0.90715, 0.74345, 0.60935, 0.49755, 0.40475] #[10.5, 7.4, 3.7, 1.3]
@@ -81,26 +81,28 @@ if __name__ == "__main__":
     print nlums2-nlos2
 
     #output tables
-    fovs = [1.5, 1.]
+    fovs = [1.5, 1.13]
     cameras = ['HSC', 'MegaCam']
     for fov, c in zip(fovs,cameras):
         print c
-
+        
         for D in Ds:
             print D
 
             if D == 794.:
-                hNfields = [10.,23., 50., 100., 144.]
-                mNfields = [10., 52., 100., 200., 324.]
+                hNfields = [10.,23., 50., 100., 154.]
+                mNfields = [10., 41., 100., 200., 271.]
             if D == 880.:
-                hNfields = [10.,23., 50., 100., 117.]
-                mNfields = [10., 52., 100., 200., 264.]
+                hNfields = [10.,23., 50., 100., 125.]
+                mNfields = [10., 41., 100., 200., 220.]
             if D == 968.:
-                hNfields = [10.,23., 50., 97.]
-                mNfields = [10., 52., 100., 218.]
+                hNfields = [10.,23., 50., 103.]
+                mNfields = [10., 41., 100., 182.]
 
             #HSC
             rfov = R_fov(fov, D)
+            print 'max fields to observe ALL predicted sats at this D:', (rvir*0.8/rfov)**2. #R=0.8 when K_los=1
+            print 'N fields to observe PAndAS at this D:', (50./rfov)**2. #R=0.8 when K_los=1
 
             # 1 field
             obs = []
@@ -119,29 +121,23 @@ if __name__ == "__main__":
                     obs.append(nlum*Klos(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
                 print i, np.sqrt((i*rfov**2.)/rvir**2.)*rvir, [round(o, 2) for o in obs]
 
-    #assert False
+
     ######################################################################
     # make plots 
 
     for D in Ds:
         print D
-        
-        #HSC field of view diameter
-        fov = 1.5
-        rfov = R_fov(fov, D)
-        print rvir**2./rfov**2.
 
         if D == 794.:
-            hNfields = [10.,23., 50., 100., 144.]
-            mNfields = [10., 52., 100., 200., 324.]
+            hNfields = [10.,23., 50., 100., 154.]
+            mNfields = [10., 41., 100., 200., 271.]
         if D == 880.:
-            hNfields = [10.,23., 50., 100., 117.]
-            mNfields = [10., 52., 100., 200., 264.]
+            hNfields = [10.,23., 50., 100., 125.]
+            mNfields = [10., 41., 100., 200., 220.]
         if D == 968.:
-            hNfields = [10.,23., 50., 97.]
-            mNfields = [10., 52., 100., 218.]
-
-
+            hNfields = [10.,23., 50., 103.]
+            mNfields = [10., 41., 100., 182.]
+        
         plt.figure()
         ax1 = plt.subplot(111)
         ax2 = ax1.twiny()
@@ -150,15 +146,18 @@ if __name__ == "__main__":
 
         obs = []
         #HSC
+        fov = 1.5
+        rfov = R_fov(fov, D)
+        print rvir**2./rfov**2.
+
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*Klos(rfov/rvir, 1.5))
         print 'R_proj:', rfov
-        print 'max fields to observe ALL predicted sats at this D:', (rvir*0.8/rfov)**2. #R=0.8 when K_los=1
         print 1,obs    
         ax1.plot(Mvs, obs,  c='k', label='1 pointing')
         ax1.legend()
 
-        labels = ['', '(PAndAS)', '', '', r'($\rm R_{vir}$)']
+        labels = ['', '(PAndAS)', '', '', '(complete)']
         for i,c,l in zip(hNfields, colors, labels):
             obs = []
             print 'R_proj:', np.sqrt((i*rfov**2.)/rvir**2.)*rvir
@@ -171,7 +170,7 @@ if __name__ == "__main__":
 
 
         #MegaCam
-        rfov = R_fov(1., D)
+        rfov = R_fov(1.13, D)
         print rfov
         print D
         print rvir**2./rfov**2.
