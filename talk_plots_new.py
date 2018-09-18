@@ -60,7 +60,7 @@ for D in Ds:
     print 'R_proj:', rfov
     print 1,obs    
     #ax1.plot(Mvs, obs,  c='k', label='1 pointing')
-    ax1.legend()
+    #ax1.legend()
 
     labels = ['(PAndAS)', '(100 kpc)']
     for i,c,l in zip(hNfields, colors, labels):
@@ -71,7 +71,7 @@ for D in Ds:
         print i, [round(o, 2) for o in obs]
         ax1.plot(Mvs, obs,  color=c, label='%i fields %s'%(i,l))
 
-    ax1.legend()
+    ax1.legend(loc='upper left')
 
 
     #MegaCam
@@ -93,8 +93,8 @@ for D in Ds:
         for Mv,nlum in zip(Mvs,nlums):
             obs.append(nlum*Klos(np.sqrt((i*rfov**2.)/rvir**2.), 1.5))
         print i, [round(o, 2) for o in obs]
-        ax1.plot(Mvs, obs, label='%i fields %s'%(i,l), color=c, marker='o', ms=3,ls='--')
-    ax1.legend(frameon=False)
+        #ax1.plot(Mvs, obs, label='%i fields %s'%(i,l), color=c, marker='o', ms=3,ls='--')
+    ax1.legend(loc='upper left')
 
 
 
@@ -110,8 +110,8 @@ for D in Ds:
     ax1.set_xlim(-10.5, -2.)
 
     plt.figtext(0.05, 0.95, r'$\rm D_{M33} = %i \, kpc$'%D, color='black')
-    plt.figtext(0.45, 0.8, 'solid: HSC', fontsize=14)
-    plt.figtext(0.45, 0.75, 'dashed: MegaCam', fontsize=14)
+    #plt.figtext(0.45, 0.8, 'solid: HSC', fontsize=14)
+    #plt.figtext(0.45, 0.75, 'dashed: MegaCam', fontsize=14)
 
     plt.savefig('M33_summary_sat_predictions_%i_new_9percent_TALK.pdf'%D)
     break
