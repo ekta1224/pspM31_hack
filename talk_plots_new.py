@@ -46,7 +46,7 @@ for D in Ds:
     plt.figure()
     ax1 = plt.subplot(111)
     ax2 = ax1.twiny()
-    ax1.plot(Mvs, nlums, label=r'D17 predictions', lw=5, color='gray')
+    ax1.plot(Mvs, nlums, label=r'$\Lambda$CDM predictions', lw=5, color='gray')
     ax1.fill_between(Mvs, nlo, nhi, color='gray', alpha=0.25)
 
     obs = []
